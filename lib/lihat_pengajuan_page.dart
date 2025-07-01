@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'services/supabase_service.dart';
 
 class LihatPengajuanPage extends StatefulWidget {
   const LihatPengajuanPage({super.key});
@@ -8,38 +9,29 @@ class LihatPengajuanPage extends StatefulWidget {
 }
 
 class _LihatPengajuanPageState extends State<LihatPengajuanPage> {
-  List<Map<String, String>> daftarPengajuan = [
-    {
-      'ruangan': 'R.301',
-      'tanggal': '2025-06-10',
-      'jam': '09:00 - 11:00',
-      'keperluan': 'Rapat Proyek',
-      'status': 'Pending'
-    },
-    {
-      'ruangan': 'R.202',
-      'tanggal': '2025-06-11',
-      'jam': '13:00 - 15:00',
-      'keperluan': 'Presentasi',
-      'status': 'Pending'
-    },
-  ];
+  List<Map<String, dynamic>> daftarPengajuan = [];
 
-  void _setujuiPengajuan(int index) {
-    setState(() {
-      daftarPengajuan.removeAt(index);
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Pengajuan disetujui')),
-    );
+  @override
+  void initState() {
+    super.initState();
+    fetchPengajuan();
   }
 
-  void _tolakPengajuan(int index) {
+  Future<void> fetchPengajuan() async {
+    final supabase = SupabaseService.client;
+    final data = await supabase.from('reservasi_ruangan').select();
     setState(() {
-      daftarPengajuan.removeAt(index);
+      daftarPengajuan = List<Map<String, dynamic>>.from(data);
     });
+  }
+
+  Future<void> _updateStatus(int index, String status) async {
+    final supabase = SupabaseService.client;
+    final id = daftarPengajuan[index]['id'];
+    await supabase.from('reservasi_ruangan').update({'status': status}).eq('id', id);
+    fetchPengajuan();
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Pengajuan ditolak')),
+      SnackBar(content: Text('Pengajuan ${status == 'Disetujui' ? 'disetujui' : 'ditolak'}')),
     );
   }
 
@@ -94,7 +86,7 @@ class _LihatPengajuanPageState extends State<LihatPengajuanPage> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              onPressed: () => _setujuiPengajuan(index),
+                              onPressed: () => _updateStatus(index, 'Disetujui'),
                               label: const Text('Setuju'),
                             ),
                             const SizedBox(width: 10),
@@ -107,7 +99,7 @@ class _LihatPengajuanPageState extends State<LihatPengajuanPage> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              onPressed: () => _tolakPengajuan(index),
+                              onPressed: () => _updateStatus(index, 'Ditolak'),
                               label: const Text('Tolak'),
                             ),
                           ],

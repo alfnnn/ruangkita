@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'ajukan_peminjaman.dart';
 import 'riwayat_peminjaman.dart';
+import 'daftar_ruangan_page.dart';
 
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
@@ -83,6 +84,42 @@ class UserPage extends StatelessWidget {
                         'Riwayat Peminjaman',
                         style: TextStyle(
                           color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          letterSpacing: 1.1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              // Daftar Ruangan
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const DaftarRuanganPage()),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.deepOrange),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Icon(Icons.meeting_room, color: Colors.deepOrange),
+                      SizedBox(width: 10),
+                      Text(
+                        'Daftar Ruangan',
+                        style: TextStyle(
+                          color: Colors.deepOrange,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                           letterSpacing: 1.1,
