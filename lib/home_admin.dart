@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'lihat_pengajuan_page.dart';
 import 'kelola_kelas_page.dart';
 import 'daftar_ruangan.dart';
-import 'bantuan_faq.dart';
 import 'services/supabase_service.dart';
 
 class HomeAdminPage extends StatelessWidget {
@@ -105,20 +104,6 @@ class HomeAdminPage extends StatelessWidget {
                         );
                       },
                     ),
-                    const SizedBox(height: 18),
-                    _adminButton(
-                      context,
-                      icon: Icons.help_outline,
-                      label: 'Pusat Bantuan',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const BantuanPage(),
-                          ),
-                        );
-                      },
-                    ),
                   ],
                 ),
               ),
@@ -141,6 +126,7 @@ class HomeAdminPage extends StatelessWidget {
                     ),
                   ),
                   onPressed: () async {
+                    // Logout logic
                     try {
                       await SupabaseService.client.auth.signOut();
                       Navigator.of(
@@ -149,7 +135,7 @@ class HomeAdminPage extends StatelessWidget {
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Gagal logout: \n${e.toString()}'),
+                          content: Text('Gagal logout: \\n${e.toString()}'),
                         ),
                       );
                     }

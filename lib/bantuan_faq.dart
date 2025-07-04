@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class BantuanPage extends StatelessWidget {
-  const BantuanPage({super.key});
+class BantuanUserPage extends StatelessWidget {
+  const BantuanUserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,31 +15,59 @@ class BantuanPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         children: [
           const Text(
-            'Pertanyaan yang Sering Diajukan (FAQ)',
+            'Bantuan Pengguna',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
 
-          _buildFAQItem(
-            'Bagaimana cara mengelola data kelas?',
-            'Masuk ke menu "Kelola Data Kelas", lalu klik tombol tambah untuk menambah kelas baru, atau klik icon edit untuk mengubah data kelas.',
-          ),
-          _buildFAQItem(
-            'Bagaimana cara menyetujui pengajuan?',
-            'Pilih menu "Lihat Pengajuan", lalu klik pengajuan yang ingin diproses. Admin dapat menyetujui atau menolak pengajuan.',
-          ),
-          _buildFAQItem(
-            'Apa itu menu Lihat Ruangan?',
-            'Menu ini digunakan untuk melihat daftar ruangan yang tersedia beserta kapasitas dan fasilitasnya.',
-          ),
-          _buildFAQItem(
-            'Siapa yang bisa mengakses aplikasi ini?',
-            'Saat ini hanya admin dan pengguna terdaftar yang bisa mengakses aplikasi ini.',
-          ),
-          _buildFAQItem(
-            'Bagaimana jika saya lupa logout?',
-            'Sistem akan otomatis mengeluarkan pengguna setelah waktu tertentu atau Anda bisa tekan tombol Logout secara manual.',
-          ),
+          _buildFeatureSection('Ajukan Peminjaman', [
+            {
+              'q': 'Bagaimana cara mengajukan peminjaman?',
+              'a':
+                  'Klik tombol "Ajukan Peminjaman", lalu isi form peminjaman sesuai kebutuhan dan kirimkan.',
+            },
+            {
+              'q': 'Apakah saya bisa memilih tanggal tertentu?',
+              'a':
+                  'Ya, pilih tanggal dan waktu yang tersedia saat mengisi form.',
+            },
+            {
+              'q': 'Kapan pengajuan saya disetujui?',
+              'a':
+                  'Pengajuan akan diperiksa oleh admin. Anda akan mendapat notifikasi saat disetujui atau ditolak.',
+            },
+          ]),
+
+          _buildFeatureSection('Riwayat Peminjaman', [
+            {
+              'q': 'Apa itu riwayat peminjaman?',
+              'a':
+                  'Halaman ini menampilkan daftar semua peminjaman yang pernah Anda ajukan.',
+            },
+            {
+              'q': 'Mengapa status saya masih "Menunggu"?',
+              'a':
+                  'Artinya pengajuan Anda belum diproses oleh admin. Tunggu konfirmasi lebih lanjut.',
+            },
+            {
+              'q': 'Apakah saya bisa membatalkan pengajuan?',
+              'a':
+                  'Jika fitur tersedia, Anda bisa klik tombol "Batalkan" pada pengajuan yang masih diproses.',
+            },
+          ]),
+
+          _buildFeatureSection('Daftar Ruangan', [
+            {
+              'q': 'Apa yang ditampilkan di daftar ruangan?',
+              'a':
+                  'Anda dapat melihat semua ruangan yang tersedia beserta kapasitas dan fasilitasnya.',
+            },
+            {
+              'q': 'Bagaimana tahu ruangan sedang dipakai?',
+              'a':
+                  'Biasanya akan ada indikator atau status di tiap ruangan jika sedang digunakan.',
+            },
+          ]),
 
           const SizedBox(height: 24),
           const Divider(),
@@ -48,25 +76,29 @@ class BantuanPage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
-          const Text('Email: support@ruangkita.com'),
+          const Text('Email: bantuan@ruangkita.com'),
           const Text('WhatsApp: +62 812 3456 7890'),
         ],
       ),
     );
   }
 
-  Widget _buildFAQItem(String question, String answer) {
+  Widget _buildFeatureSection(String title, List<Map<String, String>> faqList) {
     return ExpansionTile(
       title: Text(
-        question,
-        style: const TextStyle(fontWeight: FontWeight.w600),
+        title,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
       ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4),
-          child: Text(answer),
-        ),
-      ],
+      children:
+          faqList.map((faq) {
+            return ListTile(
+              title: Text(faq['q']!),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Text(faq['a']!),
+              ),
+            );
+          }).toList(),
     );
   }
 }
