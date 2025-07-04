@@ -13,7 +13,10 @@ class UserPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFE3F2FD), // Background biru muda modern
       appBar: AppBar(
-        title: const Text('USER', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+        title: const Text(
+          'USER',
+          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.2),
+        ),
         centerTitle: true,
         backgroundColor: const Color(0xFF1976D2),
         elevation: 0,
@@ -38,12 +41,20 @@ class UserPage extends StatelessWidget {
                 CircleAvatar(
                   radius: 38,
                   backgroundColor: Colors.blue.shade50,
-                  child: Icon(Icons.person, color: Colors.blue.shade400, size: 44),
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.blue.shade400,
+                    size: 44,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'Halo, $namaUser!',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Color(0xFF1976D2)),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Color(0xFF1976D2),
+                  ),
                 ),
                 const SizedBox(height: 28),
                 // Ajukan Peminjaman
@@ -54,12 +65,17 @@ class UserPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => AjukanPage(namaUser: namaUser)),
+                        MaterialPageRoute(
+                          builder: (_) => AjukanPage(namaUser: namaUser),
+                        ),
                       );
                     },
                     child: Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 0),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 18,
+                        horizontal: 0,
+                      ),
                       margin: const EdgeInsets.only(bottom: 18),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -76,7 +92,11 @@ class UserPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
-                          Icon(Icons.calendar_month, color: Colors.blue, size: 28),
+                          Icon(
+                            Icons.calendar_month,
+                            color: Colors.blue,
+                            size: 28,
+                          ),
                           SizedBox(width: 12),
                           Text(
                             'Ajukan Peminjaman',
@@ -100,12 +120,17 @@ class UserPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => RiwayatPage(namaUser: namaUser)),
+                        MaterialPageRoute(
+                          builder: (_) => RiwayatPage(namaUser: namaUser),
+                        ),
                       );
                     },
                     child: Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 0),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 18,
+                        horizontal: 0,
+                      ),
                       margin: const EdgeInsets.only(bottom: 18),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -146,17 +171,25 @@ class UserPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const DaftarRuanganPage()),
+                        MaterialPageRoute(
+                          builder: (_) => const DaftarRuanganPage(),
+                        ),
                       );
                     },
                     child: Container(
                       width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 0),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 18,
+                        horizontal: 0,
+                      ),
                       margin: const EdgeInsets.only(bottom: 28),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.deepOrange, width: 1.3),
+                        border: Border.all(
+                          color: Colors.deepOrange,
+                          width: 1.3,
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.deepOrange.withOpacity(0.07),
@@ -168,7 +201,11 @@ class UserPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
-                          Icon(Icons.meeting_room, color: Colors.deepOrange, size: 28),
+                          Icon(
+                            Icons.meeting_room,
+                            color: Colors.deepOrange,
+                            size: 28,
+                          ),
                           SizedBox(width: 12),
                           Text(
                             'Daftar Ruangan',
@@ -197,7 +234,9 @@ class UserPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
                         (route) => false,
                       );
                     },
