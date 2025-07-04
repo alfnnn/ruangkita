@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'services/supabase_service.dart';
 
 class KelolaKelasPage extends StatefulWidget {
   @override
@@ -6,52 +9,89 @@ class KelolaKelasPage extends StatefulWidget {
 }
 
 class _KelolaKelasPageState extends State<KelolaKelasPage> {
-  List<Map<String, String>> daftarKelas = [
-    {'nama': 'R.301', 'kapasitas': '30'},
-    {'nama': 'R.202', 'kapasitas': '25'},
-  ];
+  List<Map<String, dynamic>> daftarKelas = [];
+  String? editId;
 
   final TextEditingController namaController = TextEditingController();
   final TextEditingController kapasitasController = TextEditingController();
-  int? editIndex;
+  final TextEditingController lokasiController = TextEditingController();
 
-  void _simpanData() {
+  @override
+  void initState() {
+    super.initState();
+    fetchKelas();
+  }
+
+  Future<void> fetchKelas() async {
+    final supabase = SupabaseService.client;
+    final data = await supabase.from('ruangan').select('id, nama, kapasitas');
+    setState(() {
+      daftarKelas = List<Map<String, dynamic>>.from(data);
+    });
+  }
+
+  void _simpanData() async {
     final nama = namaController.text.trim();
     final kapasitas = kapasitasController.text.trim();
+    final lokasi = lokasiController.text.trim();
 
-    if (nama.isEmpty || kapasitas.isEmpty) return;
+    if (nama.isEmpty || kapasitas.isEmpty || lokasi.isEmpty) return;
 
-    setState(() {
-      if (editIndex == null) {
-        daftarKelas.add({'nama': nama, 'kapasitas': kapasitas});
+    final supabase = SupabaseService.client;
+    try {
+      if (editId == null) {
+        final response = await supabase.from('ruangan').insert({
+          'nama': nama,
+          'kapasitas': int.tryParse(kapasitas) ?? 0,
+          'lokasi': lokasi,
+        }).select();
+        debugPrint('Insert response: ' + response.toString());
       } else {
-        daftarKelas[editIndex!] = {'nama': nama, 'kapasitas': kapasitas};
-        editIndex = null;
+        final response = await supabase.from('ruangan').update({
+          'nama': nama,
+          'kapasitas': int.tryParse(kapasitas) ?? 0,
+          'lokasi': lokasi,
+        }).eq('id', editId ?? '').select();
+        debugPrint('Update response: ' + response.toString());
+        editId = null;
       }
       namaController.clear();
       kapasitasController.clear();
-    });
+      lokasiController.clear();
+      fetchKelas();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Data kelas berhasil disimpan!')),
+      );
+    } catch (e) {
+      debugPrint('Supabase error: ' + e.toString());
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Gagal menyimpan data: ${e.toString()}')),
+      );
+    }
   }
 
   void _editKelas(int index) {
     final data = daftarKelas[index];
-    namaController.text = data['nama']!;
-    kapasitasController.text = data['kapasitas']!;
+    namaController.text = data['nama'] ?? '';
+    kapasitasController.text = (data['kapasitas'] ?? '').toString();
+    lokasiController.text = data['lokasi'] ?? '';
     setState(() {
-      editIndex = index;
+      editId = data['id'] as String?;
     });
   }
 
-  void _hapusKelas(int index) {
-    setState(() {
-      daftarKelas.removeAt(index);
-    });
+  void _hapusKelas(int index) async {
+    final id = daftarKelas[index]['id'];
+    final supabase = SupabaseService.client;
+    await supabase.from('ruangan').delete().eq('id', id);
+    fetchKelas();
   }
 
   @override
   void dispose() {
     namaController.dispose();
     kapasitasController.dispose();
+    lokasiController.dispose();
     super.dispose();
   }
 
@@ -89,9 +129,19 @@ class _KelolaKelasPageState extends State<KelolaKelasPage> {
               ),
             ),
             const SizedBox(height: 12),
+            TextField(
+              controller: lokasiController,
+              decoration: InputDecoration(
+                labelText: 'Lokasi',
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              ),
+            ),
+            const SizedBox(height: 12),
             ElevatedButton.icon(
-              icon: Icon(editIndex == null ? Icons.add : Icons.save),
-              label: Text(editIndex == null ? 'Tambah Kelas' : 'Simpan Perubahan'),
+              icon: Icon(editId == null ? Icons.add : Icons.save),
+              label: Text(editId == null ? 'Tambah Kelas' : 'Simpan Perubahan'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 foregroundColor: Colors.white,
@@ -119,10 +169,10 @@ class _KelolaKelasPageState extends State<KelolaKelasPage> {
                           child: ListTile(
                             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             title: Text(
-                              kelas['nama']!,
+                              kelas['nama'] ?? '',
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            subtitle: Text('Kapasitas: ${kelas['kapasitas']}'),
+                            subtitle: Text('Kapasitas: ${kelas['kapasitas'] ?? ''}'),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [

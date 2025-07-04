@@ -1,17 +1,35 @@
 import 'package:flutter/material.dart';
+import 'services/supabase_service.dart';
 
-class RiwayatPage extends StatelessWidget {
+class RiwayatPage extends StatefulWidget {
   const RiwayatPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // Contoh data dummy
-    final List<Map<String, String>> riwayat = [
-      {'tanggal': '2025-06-08', 'ruangan': 'A101', 'status': 'Pending'},
-      {'tanggal': '2025-06-05', 'ruangan': 'B202', 'status': 'Disetujui'},
-      {'tanggal': '2025-06-01', 'ruangan': 'C303', 'status': 'Ditolak'},
-    ];
+  State<RiwayatPage> createState() => _RiwayatPageState();
+}
 
+class _RiwayatPageState extends State<RiwayatPage> {
+  List<Map<String, dynamic>> riwayat = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchRiwayat();
+  }
+
+  Future<void> fetchRiwayat() async {
+    final supabase = SupabaseService.client;
+    final data = await supabase
+        .from('reservasi_ruangan')
+        .select('tanggal, ruangan, status')
+        .order('tanggal', ascending: false);
+    setState(() {
+      riwayat = List<Map<String, dynamic>>.from(data);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Riwayat Peminjaman'),
@@ -56,15 +74,15 @@ class RiwayatPage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(item['tanggal']!),
+                        child: Text(item['tanggal']?.toString() ?? '-'),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(item['ruangan']!),
+                        child: Text(item['ruangan']?.toString() ?? '-'),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(item['status']!),
+                        child: Text(item['status']?.toString() ?? '-'),
                       ),
                     ],
                   ),

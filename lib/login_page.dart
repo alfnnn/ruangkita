@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'home_user.dart';
 import 'home_admin.dart';
+import 'register_page.dart';
+import 'services/supabase_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,28 +16,50 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String dropdownValue = 'User';
 
-  void _handleLogin() {
-    final username = _usernameController.text.trim();
+  void _handleLogin() async {
+    final email = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
-    if (dropdownValue == 'User') {
-      if (username == 'user' && password == 'user') {
+    if (email.isEmpty || password.isEmpty) {
+      _showError('Email dan password harus diisi');
+      return;
+    }
+
+    try {
+      final supabase = SupabaseService.client;
+      final response = await supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+      if (response.user == null) {
+        _showError('Login gagal: email atau password salah');
+        return;
+      }
+      // Ambil data user dari tabel users
+      final userData = await supabase
+          .from('users')
+          .select()
+          .eq('id', response.user!.id)
+          .single();
+      if (userData.isEmpty) {
+        _showError('Data user tidak ditemukan');
+        return;
+      }
+      if (userData['role'] == 'admin' && dropdownValue == 'Admin') {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeAdminPage()),
+        );
+      } else if (userData['role'] == 'user' && dropdownValue == 'User') {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const UserPage()),
         );
       } else {
-        _showError('Login User gagal');
+        _showError('Role tidak sesuai');
       }
-    } else if (dropdownValue == 'Admin') {
-      if (username == 'admin' && password == 'admin') {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeAdminPage()),
-        );
-      } else {
-        _showError('Login Admin gagal');
-      }
+    } catch (e) {
+      _showError('Login gagal: ${e.toString()}');
     }
   }
 
@@ -74,8 +98,8 @@ class _LoginPageState extends State<LoginPage> {
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(
-                labelText: 'Username',
-                prefixIcon: const Icon(Icons.person),
+                labelText: 'Email',
+                prefixIcon: const Icon(Icons.email),
                 filled: true,
                 fillColor: Colors.white,
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -142,6 +166,22 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+            ),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Belum punya akun?'),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RegisterPage()),
+                    );
+                  },
+                  child: const Text('Daftar di sini'),
+                ),
+              ],
             ),
           ],
         ),
