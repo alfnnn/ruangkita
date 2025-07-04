@@ -3,6 +3,7 @@ import 'login_page.dart';
 import 'ajukan_peminjaman.dart';
 import 'riwayat_peminjaman.dart';
 import 'daftar_ruangan_page.dart';
+import 'bantuan_faq.dart';
 
 class UserPage extends StatelessWidget {
   final String namaUser;
@@ -11,9 +12,12 @@ class UserPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE3F2FD), // Background biru muda modern
+      backgroundColor: const Color(0xFFE3F2FD),
       appBar: AppBar(
-        title: const Text('USER', style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+        title: const Text(
+          'USER',
+          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1.2),
+        ),
         centerTitle: true,
         backgroundColor: const Color(0xFF1976D2),
         elevation: 0,
@@ -38,153 +42,88 @@ class UserPage extends StatelessWidget {
                 CircleAvatar(
                   radius: 38,
                   backgroundColor: Colors.blue.shade50,
-                  child: Icon(Icons.person, color: Colors.blue.shade400, size: 44),
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.blue.shade400,
+                    size: 44,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'Halo, $namaUser!',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Color(0xFF1976D2)),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: Color(0xFF1976D2),
+                  ),
                 ),
                 const SizedBox(height: 28),
+
                 // Ajukan Peminjaman
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => AjukanPage(namaUser: namaUser)),
-                      );
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 0),
-                      margin: const EdgeInsets.only(bottom: 18),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.blue, width: 1.3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blue.withOpacity(0.07),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                _menuButton(
+                  icon: Icons.calendar_month,
+                  label: 'Ajukan Peminjaman',
+                  borderColor: Colors.blue,
+                  iconColor: Colors.blue,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => AjukanPage(namaUser: namaUser),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.calendar_month, color: Colors.blue, size: 28),
-                          SizedBox(width: 12),
-                          Text(
-                            'Ajukan Peminjaman',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              letterSpacing: 1.1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
+
                 // Riwayat Peminjaman
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => RiwayatPage(namaUser: namaUser)),
-                      );
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 0),
-                      margin: const EdgeInsets.only(bottom: 18),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.green, width: 1.3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.green.withOpacity(0.07),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                _menuButton(
+                  icon: Icons.history,
+                  label: 'Riwayat Peminjaman',
+                  borderColor: Colors.green,
+                  iconColor: Colors.green,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => RiwayatPage(namaUser: namaUser),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.history, color: Colors.green, size: 28),
-                          SizedBox(width: 12),
-                          Text(
-                            'Riwayat Peminjaman',
-                            style: TextStyle(
-                              color: Colors.green,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              letterSpacing: 1.1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
+
                 // Daftar Ruangan
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const DaftarRuanganPage()),
-                      );
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 0),
-                      margin: const EdgeInsets.only(bottom: 28),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.deepOrange, width: 1.3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.deepOrange.withOpacity(0.07),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                _menuButton(
+                  icon: Icons.meeting_room,
+                  label: 'Daftar Ruangan',
+                  borderColor: Colors.deepOrange,
+                  iconColor: Colors.deepOrange,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const DaftarRuanganPage(),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.meeting_room, color: Colors.deepOrange, size: 28),
-                          SizedBox(width: 12),
-                          Text(
-                            'Daftar Ruangan',
-                            style: TextStyle(
-                              color: Colors.deepOrange,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 17,
-                              letterSpacing: 1.1,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
-                // Tombol Logout
+
+                // Pusat Bantuan
+                _menuButton(
+                  icon: Icons.help_outline,
+                  label: 'Pusat Bantuan',
+                  borderColor: Colors.deepPurple,
+                  iconColor: Colors.deepPurple,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const BantuanUserPage(),
+                      ),
+                    );
+                  },
+                ),
+
+                // Logout
                 Padding(
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
                   child: TextButton.icon(
@@ -197,14 +136,18 @@ class UserPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
                         (route) => false,
                       );
                     },
                   ),
                 ),
+
                 const Divider(height: 30, thickness: 1.2),
-                // Kontak Admin/CS
+
+                // Kontak Admin
                 const Text(
                   'Kontak Admin:',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -228,6 +171,56 @@ class UserPage extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Komponen tombol menu
+  Widget _menuButton({
+    required IconData icon,
+    required String label,
+    required Color borderColor,
+    required Color iconColor,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: onTap,
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          margin: const EdgeInsets.only(bottom: 18),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: borderColor, width: 1.3),
+            boxShadow: [
+              BoxShadow(
+                color: borderColor.withOpacity(0.07),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: iconColor, size: 28),
+              const SizedBox(width: 12),
+              Text(
+                label,
+                style: TextStyle(
+                  color: iconColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                  letterSpacing: 1.1,
+                ),
+              ),
+            ],
           ),
         ),
       ),
