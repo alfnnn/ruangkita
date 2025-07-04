@@ -38,9 +38,9 @@ class _LihatPengajuanPageState extends State<LihatPengajuanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF8E1), // warna latar belakang
+      backgroundColor: const Color(0xFFE3F2FD), // warna biru muda
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.blue, // warna biru
         title: const Text('Lihat Pengajuan'),
         centerTitle: true,
       ),
@@ -80,7 +80,7 @@ class _LihatPengajuanPageState extends State<LihatPengajuanPage> {
                             ElevatedButton.icon(
                               icon: const Icon(Icons.check, size: 16),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                                backgroundColor: Colors.blue[800], // biru tua
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -93,7 +93,7 @@ class _LihatPengajuanPageState extends State<LihatPengajuanPage> {
                             ElevatedButton.icon(
                               icon: const Icon(Icons.close, size: 16),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.red,
+                                backgroundColor: Colors.blueGrey, // abu kebiruan
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
