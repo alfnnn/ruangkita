@@ -98,59 +98,82 @@ class _KelolaKelasPageState extends State<KelolaKelasPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF8E1),
+      backgroundColor: const Color(0xFFE3F2FD), // biru muda
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.blue, // biru
         title: const Text('Kelola Data Kelas'),
         centerTitle: true,
+        elevation: 2,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: namaController,
-              decoration: InputDecoration(
-                labelText: 'Nama Kelas (misal: R.101)',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blue.withOpacity(0.08),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: namaController,
+                    decoration: InputDecoration(
+                      labelText: 'Nama Kelas (misal: R.101)',
+                      prefixIcon: const Icon(Icons.class_, color: Colors.blue),
+                      filled: true,
+                      fillColor: Colors.blue[50],
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: kapasitasController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Kapasitas',
+                      prefixIcon: const Icon(Icons.people, color: Colors.blue),
+                      filled: true,
+                      fillColor: Colors.blue[50],
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: lokasiController,
+                    decoration: InputDecoration(
+                      labelText: 'Lokasi',
+                      prefixIcon: const Icon(Icons.location_on, color: Colors.blue),
+                      filled: true,
+                      fillColor: Colors.blue[50],
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton.icon(
+                    icon: Icon(editId == null ? Icons.add : Icons.save),
+                    label: Text(editId == null ? 'Tambah Kelas' : 'Simpan Perubahan'),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue[800],
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 45),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      elevation: 2,
+                    ),
+                    onPressed: _simpanData,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: kapasitasController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Kapasitas',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-              ),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: lokasiController,
-              decoration: InputDecoration(
-                labelText: 'Lokasi',
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-              ),
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton.icon(
-              icon: Icon(editId == null ? Icons.add : Icons.save),
-              label: Text(editId == null ? 'Tambah Kelas' : 'Simpan Perubahan'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                foregroundColor: Colors.white,
-                minimumSize: const Size(double.infinity, 45),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              ),
-              onPressed: _simpanData,
-            ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
             const Divider(),
             Expanded(
               child: daftarKelas.isEmpty
@@ -161,28 +184,35 @@ class _KelolaKelasPageState extends State<KelolaKelasPage> {
                         final kelas = daftarKelas[index];
                         return Card(
                           color: Colors.white,
-                          elevation: 4,
-                          margin: const EdgeInsets.symmetric(vertical: 6),
+                          elevation: 3,
+                          margin: const EdgeInsets.symmetric(vertical: 8),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(16),
+                            side: BorderSide(color: Colors.blue[100]!, width: 1),
                           ),
                           child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.blue[100],
+                              child: const Icon(Icons.class_, color: Colors.blue),
+                            ),
                             title: Text(
                               kelas['nama'] ?? '',
-                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                             ),
                             subtitle: Text('Kapasitas: ${kelas['kapasitas'] ?? ''}'),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: const Icon(Icons.edit, color: Colors.orange),
+                                  icon: const Icon(Icons.edit, color: Colors.blue),
                                   onPressed: () => _editKelas(index),
+                                  tooltip: 'Edit',
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.delete, color: Colors.red),
+                                  icon: const Icon(Icons.delete, color: Colors.redAccent),
                                   onPressed: () => _hapusKelas(index),
+                                  tooltip: 'Hapus',
                                 ),
                               ],
                             ),

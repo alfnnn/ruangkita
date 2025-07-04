@@ -64,18 +64,19 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange[50],
+      backgroundColor: const Color(0xFFE3F2FD), // biru muda
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.blue, // biru
         title: const Text('Registrasi'),
         centerTitle: true,
+        elevation: 2,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           children: [
             const SizedBox(height: 30),
-            const Icon(Icons.person_add, size: 80, color: Colors.orange),
+            const Icon(Icons.person_add, size: 80, color: Colors.blue),
             const SizedBox(height: 10),
             const Text(
               'DAFTAR AKUN USER',
@@ -83,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.deepOrange,
+                color: Colors.blue,
               ),
             ),
             const SizedBox(height: 40),
@@ -91,9 +92,9 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: _namaController,
               decoration: InputDecoration(
                 labelText: 'Nama Lengkap',
-                prefixIcon: const Icon(Icons.badge),
+                prefixIcon: const Icon(Icons.badge, color: Colors.blue),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Colors.blue[50],
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
@@ -102,9 +103,9 @@ class _RegisterPageState extends State<RegisterPage> {
               controller: _usernameController,
               decoration: InputDecoration(
                 labelText: 'Email',
-                prefixIcon: const Icon(Icons.email),
+                prefixIcon: const Icon(Icons.email, color: Colors.blue),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Colors.blue[50],
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
@@ -114,9 +115,9 @@ class _RegisterPageState extends State<RegisterPage> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
-                prefixIcon: const Icon(Icons.lock),
+                prefixIcon: const Icon(Icons.lock, color: Colors.blue),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Colors.blue[50],
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
@@ -126,9 +127,9 @@ class _RegisterPageState extends State<RegisterPage> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Konfirmasi Password',
-                prefixIcon: const Icon(Icons.lock_outline),
+                prefixIcon: const Icon(Icons.lock_outline, color: Colors.blue),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Colors.blue[50],
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
             ),
@@ -140,12 +141,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 label: const Text('Daftar'),
                 onPressed: _handleRegister,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
+                  backgroundColor: Colors.blue[800],
+                  foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   textStyle: const TextStyle(fontSize: 16),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
+                  elevation: 2,
                 ),
               ),
             ),
