@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFF3E0), // warna krem lembut
+      backgroundColor: const Color(0xFF1976D2), // warna biru utama
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
               'RUANG KITA',
               style: TextStyle(
                 fontSize: 24,
-                color: Colors.deepOrange,
+                color: Color(0xFF1976D2), // warna biru utama
                 fontWeight: FontWeight.bold,
                 letterSpacing: 1.5,
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'services/supabase_service.dart';
+import 'splashscreen.dart';
 import 'login_page.dart'; // Ganti SplashScreen ke LoginPage
 
 Future<void> main() async {
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LoginPage(), // Ganti SplashScreen ke LoginPage
+      home: const SplashScreen(), // Tampilkan SplashScreen dulu
     );
   }
 }
