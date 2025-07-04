@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'lihat_pengajuan_page.dart';
 import 'kelola_kelas_page.dart';
 import 'daftar_ruangan.dart';
+import 'bantuan_faq.dart';
 import 'services/supabase_service.dart';
 
 class HomeAdminPage extends StatelessWidget {
@@ -24,12 +25,20 @@ class HomeAdminPage extends StatelessWidget {
               CircleAvatar(
                 radius: 44,
                 backgroundColor: Colors.blue[100],
-                child: const Icon(Icons.admin_panel_settings, size: 54, color: Colors.blue),
+                child: const Icon(
+                  Icons.admin_panel_settings,
+                  size: 54,
+                  color: Colors.blue,
+                ),
               ),
               const SizedBox(height: 18),
               const Text(
                 'Selamat Datang, Admin!',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.blue),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                ),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -62,7 +71,9 @@ class HomeAdminPage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LihatPengajuanPage()),
+                          MaterialPageRoute(
+                            builder: (context) => LihatPengajuanPage(),
+                          ),
                         );
                       },
                     ),
@@ -74,7 +85,9 @@ class HomeAdminPage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => KelolaKelasPage()),
+                          MaterialPageRoute(
+                            builder: (context) => KelolaKelasPage(),
+                          ),
                         );
                       },
                     ),
@@ -86,7 +99,23 @@ class HomeAdminPage extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => DaftarRuanganPage()),
+                          MaterialPageRoute(
+                            builder: (context) => DaftarRuanganPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 18),
+                    _adminButton(
+                      context,
+                      icon: Icons.help_outline,
+                      label: 'Pusat Bantuan',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BantuanPage(),
+                          ),
                         );
                       },
                     ),
@@ -103,19 +132,25 @@ class HomeAdminPage extends StatelessWidget {
                     backgroundColor: Colors.red[700],
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    textStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
                   onPressed: () async {
-                    // Logout logic
                     try {
                       await SupabaseService.client.auth.signOut();
-                      Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
+                      Navigator.of(
+                        context,
+                      ).pushNamedAndRemoveUntil('/', (route) => false);
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Gagal logout: \\n${e.toString()}')),
+                        SnackBar(
+                          content: Text('Gagal logout: \n${e.toString()}'),
+                        ),
                       );
                     }
                   },
@@ -129,10 +164,12 @@ class HomeAdminPage extends StatelessWidget {
     );
   }
 
-  Widget _adminButton(BuildContext context,
-      {required IconData icon,
-      required String label,
-      required VoidCallback onTap}) {
+  Widget _adminButton(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
