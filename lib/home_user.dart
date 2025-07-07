@@ -4,6 +4,7 @@ import 'ajukan_peminjaman.dart';
 import 'riwayat_peminjaman.dart';
 import 'daftar_ruangan_page.dart';
 import 'bantuan_faq.dart';
+import 'tentang_aplikasi_page.dart'; // ✅ Tambahan import
 
 class UserPage extends StatelessWidget {
   final String namaUser;
@@ -120,6 +121,17 @@ class UserPage extends StatelessWidget {
                         builder: (_) => const BantuanUserPage(),
                       ),
                     );
+                  },
+                ),
+
+                // ✅ Tambahan: Tentang Aplikasi
+                _menuButton(
+                  icon: Icons.info_outline,
+                  label: 'Tentang Aplikasi',
+                  borderColor: Colors.indigo,
+                  iconColor: Colors.indigo,
+                  onTap: () {
+                    Navigator.pushNamed(context, '/tentang');
                   },
                 ),
 

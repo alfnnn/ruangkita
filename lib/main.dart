@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'services/supabase_service.dart';
 import 'splashscreen.dart';
-import 'login_page.dart'; // Ganti SplashScreen ke LoginPage
+import 'login_page.dart';
+import 'tentang_aplikasi_page.dart'; // ✅ Tambahan
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +38,11 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: const SplashScreen(), // Tampilkan SplashScreen dulu
+
+      // ✅ Tambahan: Routing ke halaman Tentang Aplikasi
+      routes: {
+        '/tentang': (context) => const TentangAplikasiPage(),
+      },
     );
   }
 }
